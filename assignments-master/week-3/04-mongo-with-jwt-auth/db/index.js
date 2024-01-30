@@ -1,21 +1,61 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('your-mongodb-url');
+mongoose.connect('mongodb+srv://harsh34k:Tf4JBizLvHYriziw@cluster0.kdgfotb.mongodb.net/kirat_app');
 
 // Define schemas
-const AdminSchema = new mongoose.Schema({
-    // Schema definition here
-});
 
-const UserSchema = new mongoose.Schema({
-    // Schema definition here
-});
 
 const CourseSchema = new mongoose.Schema({
-    // Schema definition here
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+
+    },
+    price: {
+        type: Number,
+        required: true,
+        default: 0,
+
+    },
+    imageLink: {
+        type: String,
+    },
+});
+const UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    purchasedCourse: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 });
 
+const AdminSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+
+});
 const Admin = mongoose.model('Admin', AdminSchema);
 const User = mongoose.model('User', UserSchema);
 const Course = mongoose.model('Course', CourseSchema);
